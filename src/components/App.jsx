@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import ContactForm from './components/ContactForm';
-import ContactList from './components/ContactList';
-import Filter from './components/Filter';
+import { nanoid } from 'nanoid';
+import ContactForm from './ContactForm/ContactForm';
+import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     filter: '',
+    name: '',
+    number: '',
   };
 
   handleAddContact = newContact => {
@@ -22,7 +29,7 @@ class App extends Component {
       return;
     }
 
-    const contactToAdd = { ...newContact, id: uuidv4() };
+    const contactToAdd = { ...newContact, id: nanoid() };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contactToAdd],
     }));
@@ -50,7 +57,7 @@ class App extends Component {
     const filteredContacts = this.getFilteredContacts();
 
     return (
-      <div>
+      <div className="container">
         <h1>Phonebook</h1>
         <ContactForm onAddContact={this.handleAddContact} />
         <h2>Contacts</h2>

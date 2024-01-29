@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
+import css from 'components/ContactForm/ContactForm.module.css';
 
 class ContactForm extends Component {
   state = {
@@ -14,7 +16,9 @@ class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.onAddContact({ ...this.state });
+    const { name, number } = this.state;
+    const contact = { id: nanoid(), name, number };
+    this.props.onAddContact(contact);
 
     this.setState({ name: '', number: '' });
   };
@@ -23,8 +27,8 @@ class ContactForm extends Component {
     const { name, number } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
+      <form className={css.form} onSubmit={this.handleSubmit}>
+        <label className={css.text}>
           Name:
           <input
             type="text"
@@ -34,7 +38,7 @@ class ContactForm extends Component {
             required
           />
         </label>
-        <label>
+        <label className={css.text}>
           Number:
           <input
             type="tel"
@@ -44,7 +48,9 @@ class ContactForm extends Component {
             required
           />
         </label>
-        <button type="submit">Add contact</button>
+        <button className={css.buttonStyle} type="submit">
+          Add contact
+        </button>
       </form>
     );
   }
